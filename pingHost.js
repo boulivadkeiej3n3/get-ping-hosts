@@ -21,7 +21,7 @@ async function Router(req, res){
     const serverURL = req.url.match(/(?<=\/getPing\/).+/);
     if(!serverURL){res.end(`server is awake`);return 0;}
    //Add the newely created to the local database and return back the previosu and the next index:
-   ServersList.push(serverURL);
+   (ServersList.indexOf(serverURL) <0 )?ServersList.push(serverURL):0;
    console.log(ServersList.indexOf(serverURL) -1)
    res.end (JSON.stringify({previousServer: (ServersList.indexOf(serverURL) -1 >= 0)? ServersList[ServersList.indexOf(serverURL) -1]:ServersList[ServersList.indexOf(serverURL)]}));
 
