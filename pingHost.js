@@ -10,10 +10,13 @@ let ServersList;
         connection ? console.log(`Database Connected!`): console.log(`Error Occured during connection to database`);
     });
         ServersList = await ServersDB.find({url:{$regex:/.+/}},{__v:0,_id:0});
+    setInterval((req,res)=>{
+        HTTP.get(`https://get-ping-host.onrender.com/`)
+    },(5*60000))
 })();
 /********************** **/
 async function Router(req, res){
- 
+     console.log(`REQUEST RECEIVED`);
     const serverURL = req.url.match(/(?<=\/getPing\/).+/);
    //Add the newely created to the local database and return back the previosu and the next index:
    ServersList.push(serverURL);
