@@ -12,7 +12,7 @@ let ServersList;
     });
         ServersList = await ServersDB.find({url:{$regex:/.+/}},{__v:0,_id:0});
     setInterval((req,res)=>{
-        HTTP.get(`https://get-ping-host.onrender.com/`)
+        Axios.get(`https://get-ping-host.onrender.com/`)
     },(5*60000))
 })();
 /********************** **/
