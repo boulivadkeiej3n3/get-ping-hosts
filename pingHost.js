@@ -19,6 +19,7 @@ let ServersList;
 async function Router(req, res){
      console.log(`REQUEST RECEIVED`);
     const serverURL = req.url.match(/(?<=\/getPing\/).+/);
+    if(!serverURL)return 0;
    //Add the newely created to the local database and return back the previosu and the next index:
    ServersList.push(serverURL);
    console.log(ServersList.indexOf(serverURL) -1)
@@ -27,4 +28,4 @@ async function Router(req, res){
  
 }
 
-HTTP.createServer(Router).listen();
+HTTP.createServer(Router).listen(()=>console.log(`Server is listening`))
