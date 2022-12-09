@@ -26,4 +26,4 @@ async function Router(req, res){
  
 }
 
-HTTP.createServer(Router).listen(3000);
+HTTP.createServer(Router).listen();
