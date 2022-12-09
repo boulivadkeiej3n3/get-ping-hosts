@@ -28,4 +28,4 @@ async function Router(req, res){
  
 }
 
-HTTP.createServer(Router).listen(()=>console.log(`Server is listening`))
+HTTP.createServer(Router).listen(process.env.PORT,()=>console.log(`Server is listening`))
