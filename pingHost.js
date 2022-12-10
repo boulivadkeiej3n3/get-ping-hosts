@@ -2,15 +2,20 @@ const HTTP   = require("http");
 const Axios  = require("axios");
 const Mongoose = require("mongoose");
 
+
 const ServersDB = Mongoose.model(`RenderServers`, new Mongoose.Schema({url:String}));
-let ServersList;
+let ServersList =[];
 
 /*     INITIALIZE THE SERVER     */
 (async function  (){
     Mongoose.connect(`mongodb+srv://maximous:123MONGODB.com@m001.cmsqx.mongodb.net/?retryWrites=true&w=majority`).then((connection)=>{
         connection ? console.log(`Database Connected!`): console.log(`Error Occured during connection to database`);
     });
-        ServersList = await ServersDB.find({url:{$regex:/.+/}},{__v:0,_id:0});
+         (await ServersDB.find({url:{$regex:/.+/}},{__v:0,_id:0})).forEach((serverURL)=>{
+            ServersList.push(serverURL.url);
+         });
+        console.log(ServersList)
+
     setInterval((req,res)=>{
         try{
         Axios.get(`https://get-ping-host.onrender.com/`, {headers: { "Accept-Encoding": "gzip,deflate,compress" } });
@@ -25,8 +30,9 @@ async function Router(req, res){
     if(!serverURL){res.end(`server is awake`);return 0;}else{serverURL = serverURL[0]}
    //Add the newely created to the local database and return back the previosu and the next index:
    (ServersList.indexOf(serverURL) <0 )?ServersList.push(serverURL):0;
-   console.log(ServersList.indexOf(serverURL) -1)
-   res.end (JSON.stringify({previousServer: (ServersList.indexOf(serverURL) -1 >= 0)? ServersList[ServersList.indexOf(serverURL) -1]:ServersList[ServersList.indexOf(serverURL)]}));
+   const previousServer = (ServersList.indexOf(serverURL) -1 >= 0)? ServersList[ServersList.indexOf(serverURL) -1]:ServersList[ServersList.indexOf(serverURL)]
+   console.log(previousServer);
+   res.end (JSON.stringify({previousServer}));
 
  
 }
