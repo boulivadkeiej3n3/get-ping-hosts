@@ -31,7 +31,7 @@ async function Router(req, res){
    //Add the newely created to the local database and return back the previosu and the next index:
    (ServersList.indexOf(serverURL) <0 )?ServersList.push(serverURL):0;
    const previousServer = (ServersList.indexOf(serverURL) -1 >= 0)? ServersList[ServersList.indexOf(serverURL) -1]:ServersList[ServersList.indexOf(serverURL)]
-   console.log(previousServer);
+   console.log(`Previous Server: `+previousServer);
    res.end (JSON.stringify({previousServer}));
 
  
