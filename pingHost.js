@@ -29,8 +29,8 @@ async function Router(req, res){
     if(!serverURL){res.end(`server is awake`);return 0;}else{serverURL = serverURL[0]}
    //Add the newely created to the local database and return back the previosu and the next index:
    (ServersList.indexOf(serverURL) <0 )?ServersList.push(serverURL):0;
-   const previousServer = (ServersList.indexOf(serverURL) -1 >= 0)? ServersList[ServersList.indexOf(serverURL) -1]:ServersList[ServersList.indexOf(serverURL)]
-             previousServer.replace("onrender.com",".onrender.com");
+   let previousServer = (ServersList.indexOf(serverURL) -1 >= 0)? ServersList[ServersList.indexOf(serverURL) -1]:ServersList[ServersList.indexOf(serverURL)]
+           previousServer=  previousServer.replace("onrender.com",".onrender.com");
    console.log(`Previous Server: `+previousServer);
    res.end (JSON.stringify({previousServer}));
 
